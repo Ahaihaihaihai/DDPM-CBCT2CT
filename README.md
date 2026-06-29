@@ -19,6 +19,7 @@ DATA_RANGE = 4071, PSNR = 20 * log10(4071 / RMSE).
 ## Citation
 If you use this code, please cite the original method:
 
+```
 @article{peng2024cbct,
   title   = {{CBCT}-based synthetic {CT} image generation using conditional denoising diffusion probabilistic model},
   author  = {Peng, Junbo and Qiu, Richard L. J. and Wynne, Jacob F. and Chang, Chih-Wei and Pan, Shaoyan and Wang, Tonghe and Roper, Justin and Liu, Tian and Patel, Pretesh R. and Yu, David S. and Yang, Xiaofeng},
@@ -26,3 +27,4 @@ If you use this code, please cite the original method:
   year    = {2024},
   doi     = {10.1002/mp.16704}
 }
+```
