@@ -77,16 +77,8 @@ Both the training and validation loss drop steeply in the first few epochs and t
 
 ### Results (test set, full image)
 
-Computed over the held-out test patients (`metrics_peng.csv`):
-
-| Comparison items | MAE | PSNR | NCC |
-| --- | --- | --- | --- |
-| Original Paper | 25.99±11.84 | 30.49±3.73 | 0.99±0.01 |
-| Epoch_100_Full | 31.13861304 | 24.39186087 | 0.964869565 |
-| Epoch_100_roi | 76.97120435 | 21.02089565 | 0.935452174 |
-
-The sCT reduces MAE against ground-truth CT by roughly **3×** versus the raw CBCT input, confirming the HU correction and structural translation are working. (PSNR here uses the paper's max-pixel definition on data clipped to `[-1000, 2000]` HU, so it is a slightly conservative apples-to-oranges comparison with the paper's number.)
-
+Inference Results at Epoch 100
+For each set, the middle slice of the data is used.
 <table>
   <thead>
     <tr>
@@ -117,6 +109,18 @@ The sCT reduces MAE against ground-truth CT by roughly **3×** versus the raw CB
     </tr>
   </tbody>
 </table>
+
+Computed over the held-out test patients (`metrics_peng.csv`):
+
+| Comparison items | MAE | PSNR | NCC |
+| --- | --- | --- | --- |
+| Original Paper | 25.99±11.84 | 30.49±3.73 | 0.99±0.01 |
+| Epoch_100_Full | 31.13861304 | 24.39186087 | 0.964869565 |
+| Epoch_100_roi | 76.97120435 | 21.02089565 | 0.935452174 |
+
+The sCT reduces MAE against ground-truth CT by roughly **3×** versus the raw CBCT input, confirming the HU correction and structural translation are working. (PSNR here uses the paper's max-pixel definition on data clipped to `[-1000, 2000]` HU, so it is a slightly conservative apples-to-oranges comparison with the paper's number.)
+
+
 
 # Engineering & Evaluation
 
