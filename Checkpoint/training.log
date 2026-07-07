@@ -1,0 +1,154 @@
+
+===== MULAI TRAINING =====
+Epochs     : 100
+Batch size : 2
+LR         : 0.0001
+Seed       : 42
+Device     : cuda:0
+Dataset    : /data/3THDD/dataset/CBCT2CT/brain_DICOM/
+-> Epoch 1/100 | TrainLoss: 0.0082 | ValLoss: 0.0040 | GradNorm: 0.207 | Durasi: 0:50:22.144536 | ETA: 3 days, 11:06:32.309089
+-> Epoch 2/100 | TrainLoss: 0.0033 | ValLoss: 0.0030 | GradNorm: 0.107 | Durasi: 0:50:20.751150 | ETA: 3 days, 10:13:53.612689
+-> Epoch 3/100 | TrainLoss: 0.0029 | ValLoss: 0.0028 | GradNorm: 0.094 | Durasi: 0:50:24.083990 | ETA: 3 days, 9:28:56.146993
+-> Epoch 4/100 | TrainLoss: 0.0026 | ValLoss: 0.0032 | GradNorm: 0.087 | Durasi: 0:50:20.746811 | ETA: 3 days, 8:33:11.693871
+-> Epoch 5/100 | TrainLoss: 0.0025 | ValLoss: 0.0027 | GradNorm: 0.081 | Durasi: 0:50:23.903373 | ETA: 3 days, 7:47:50.820481
+[OK] Checkpoint disimpan: ./Checkpoints/ckpt_5_.pt
+-> Epoch 6/100 | TrainLoss: 0.0023 | ValLoss: 0.0025 | GradNorm: 0.076 | Durasi: 0:50:21.433765 | ETA: 3 days, 6:53:34.773904
+-> Epoch 7/100 | TrainLoss: 0.0023 | ValLoss: 0.0026 | GradNorm: 0.071 | Durasi: 0:50:22.945529 | ETA: 3 days, 6:05:33.934218
+-> Epoch 8/100 | TrainLoss: 0.0022 | ValLoss: 0.0025 | GradNorm: 0.067 | Durasi: 0:50:20.922907 | ETA: 3 days, 5:12:04.907411
+-> Epoch 9/100 | TrainLoss: 0.0023 | ValLoss: 0.0024 | GradNorm: 0.064 | Durasi: 0:50:23.556572 | ETA: 3 days, 4:25:43.648092
+-> Epoch 10/100 | TrainLoss: 0.0021 | ValLoss: 0.0024 | GradNorm: 0.061 | Durasi: 0:50:20.986769 | ETA: 3 days, 3:31:28.809228
+[OK] Checkpoint disimpan: ./Checkpoints/ckpt_10_.pt
+-> Epoch 11/100 | TrainLoss: 0.0021 | ValLoss: 0.0023 | GradNorm: 0.058 | Durasi: 0:50:24.781115 | ETA: 3 days, 2:46:45.519240
+-> Epoch 12/100 | TrainLoss: 0.0021 | ValLoss: 0.0023 | GradNorm: 0.056 | Durasi: 0:50:23.476046 | ETA: 3 days, 1:54:25.892014
+-> Epoch 13/100 | TrainLoss: 0.0021 | ValLoss: 0.0023 | GradNorm: 0.053 | Durasi: 0:50:25.619108 | ETA: 3 days, 1:07:08.862413
+-> Epoch 14/100 | TrainLoss: 0.0020 | ValLoss: 0.0023 | GradNorm: 0.051 | Durasi: 0:50:23.758690 | ETA: 3 days, 0:14:03.247371
+-> Epoch 15/100 | TrainLoss: 0.0019 | ValLoss: 0.0023 | GradNorm: 0.047 | Durasi: 0:50:25.525515 | ETA: 2 days, 23:26:09.668802
+[OK] Checkpoint disimpan: ./Checkpoints/ckpt_15_.pt
+-> Epoch 16/100 | TrainLoss: 0.0020 | ValLoss: 0.0022 | GradNorm: 0.046 | Durasi: 0:50:24.434107 | ETA: 2 days, 22:34:12.464953
+-> Epoch 17/100 | TrainLoss: 0.0020 | ValLoss: 0.0022 | GradNorm: 0.043 | Durasi: 0:50:21.849362 | ETA: 2 days, 21:40:13.497057
+-> Epoch 18/100 | TrainLoss: 0.0019 | ValLoss: 0.0022 | GradNorm: 0.042 | Durasi: 0:50:23.953400 | ETA: 2 days, 20:52:44.178811
+-> Epoch 19/100 | TrainLoss: 0.0019 | ValLoss: 0.0022 | GradNorm: 0.040 | Durasi: 0:50:21.764065 | ETA: 2 days, 19:59:22.889267
+-> Epoch 20/100 | TrainLoss: 0.0019 | ValLoss: 0.0023 | GradNorm: 0.039 | Durasi: 0:50:22.177293 | ETA: 2 days, 19:09:34.183426
+[OK] Checkpoint disimpan: ./Checkpoints/ckpt_20_.pt
+-> Epoch 21/100 | TrainLoss: 0.0019 | ValLoss: 0.0022 | GradNorm: 0.037 | Durasi: 0:50:24.574999 | ETA: 2 days, 18:22:21.424928
+-> Epoch 22/100 | TrainLoss: 0.0019 | ValLoss: 0.0022 | GradNorm: 0.036 | Durasi: 0:50:24.821047 | ETA: 2 days, 17:32:16.041634
+-> Epoch 23/100 | TrainLoss: 0.0019 | ValLoss: 0.0022 | GradNorm: 0.035 | Durasi: 0:50:25.083561 | ETA: 2 days, 16:42:11.434174
+-> Epoch 24/100 | TrainLoss: 0.0019 | ValLoss: 0.0023 | GradNorm: 0.034 | Durasi: 0:50:25.386251 | ETA: 2 days, 15:52:09.355056
+-> Epoch 25/100 | TrainLoss: 0.0019 | ValLoss: 0.0022 | GradNorm: 0.033 | Durasi: 0:50:24.692475 | ETA: 2 days, 15:00:51.935631
+[OK] Checkpoint disimpan: ./Checkpoints/ckpt_25_.pt
+-> Epoch 26/100 | TrainLoss: 0.0019 | ValLoss: 0.0022 | GradNorm: 0.033 | Durasi: 0:50:25.851315 | ETA: 2 days, 14:11:52.997294
+-> Epoch 27/100 | TrainLoss: 0.0019 | ValLoss: 0.0022 | GradNorm: 0.032 | Durasi: 0:50:24.361504 | ETA: 2 days, 13:19:38.389815
+-> Epoch 28/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.031 | Durasi: 0:50:25.901319 | ETA: 2 days, 12:31:04.894987
+-> Epoch 29/100 | TrainLoss: 0.0019 | ValLoss: 0.0022 | GradNorm: 0.030 | Durasi: 0:50:26.065039 | ETA: 2 days, 11:40:50.617763
+-> Epoch 30/100 | TrainLoss: 0.0018 | ValLoss: 0.0023 | GradNorm: 0.030 | Durasi: 0:50:26.147924 | ETA: 2 days, 10:50:30.354660
+[OK] Checkpoint disimpan: ./Checkpoints/ckpt_30_.pt
+-> Epoch 31/100 | TrainLoss: 0.0019 | ValLoss: 0.0022 | GradNorm: 0.030 | Durasi: 0:50:27.383154 | ETA: 2 days, 10:01:29.437637
+-> Epoch 32/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.028 | Durasi: 0:50:25.517783 | ETA: 2 days, 9:08:55.209239
+-> Epoch 33/100 | TrainLoss: 0.0019 | ValLoss: 0.0022 | GradNorm: 0.028 | Durasi: 0:50:24.872246 | ETA: 2 days, 8:17:46.440484
+-> Epoch 34/100 | TrainLoss: 0.0019 | ValLoss: 0.0022 | GradNorm: 0.028 | Durasi: 0:50:26.052513 | ETA: 2 days, 7:28:39.465866
+-> Epoch 35/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.026 | Durasi: 0:50:25.352193 | ETA: 2 days, 6:37:27.892553
+[OK] Checkpoint disimpan: ./Checkpoints/ckpt_35_.pt
+-> Epoch 36/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.026 | Durasi: 0:50:26.532519 | ETA: 2 days, 5:48:18.081223
+-> Epoch 37/100 | TrainLoss: 0.0019 | ValLoss: 0.0021 | GradNorm: 0.027 | Durasi: 0:50:26.294773 | ETA: 2 days, 4:57:36.570675
+-> Epoch 38/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.026 | Durasi: 0:50:24.484953 | ETA: 2 days, 4:05:18.067081
+-> Epoch 39/100 | TrainLoss: 0.0019 | ValLoss: 0.0022 | GradNorm: 0.028 | Durasi: 0:50:25.978189 | ETA: 2 days, 3:16:24.669558
+-> Epoch 40/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.029 | Durasi: 0:50:24.993895 | ETA: 2 days, 2:24:59.633689
+[OK] Checkpoint disimpan: ./Checkpoints/ckpt_40_.pt
+-> Epoch 41/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.026 | Durasi: 0:50:25.005481 | ETA: 2 days, 1:34:35.323393
+-> Epoch 42/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.027 | Durasi: 0:50:24.474216 | ETA: 2 days, 0:43:39.504555
+-> Epoch 43/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.025 | Durasi: 0:50:26.393655 | ETA: 1 day, 23:55:04.438352
+-> Epoch 44/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.027 | Durasi: 0:50:24.771268 | ETA: 1 day, 23:03:07.190989
+-> Epoch 45/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.025 | Durasi: 0:50:25.817368 | ETA: 1 day, 22:13:39.955215
+[OK] Checkpoint disimpan: ./Checkpoints/ckpt_45_.pt
+-> Epoch 46/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.026 | Durasi: 0:50:25.290151 | ETA: 1 day, 21:22:45.668160
+-> Epoch 47/100 | TrainLoss: 0.0019 | ValLoss: 0.0023 | GradNorm: 0.025 | Durasi: 0:50:25.021503 | ETA: 1 day, 20:32:06.139645
+-> Epoch 48/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.025 | Durasi: 0:50:25.000838 | ETA: 1 day, 19:41:40.043591
+-> Epoch 49/100 | TrainLoss: 0.0019 | ValLoss: 0.0022 | GradNorm: 0.032 | Durasi: 0:50:25.686125 | ETA: 1 day, 18:51:49.992389
+-> Epoch 50/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.026 | Durasi: 0:50:24.709380 | ETA: 1 day, 18:00:35.468984
+[OK] Checkpoint disimpan: ./Checkpoints/ckpt_50_.pt
+-> Epoch 51/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.026 | Durasi: 0:50:25.007459 | ETA: 1 day, 17:10:25.365487
+-> Epoch 52/100 | TrainLoss: 0.0019 | ValLoss: 0.0022 | GradNorm: 0.027 | Durasi: 0:50:26.111908 | ETA: 1 day, 16:20:53.371593
+-> Epoch 53/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.027 | Durasi: 0:50:24.371615 | ETA: 1 day, 15:29:05.465924
+-> Epoch 54/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.021 | Durasi: 0:50:24.477256 | ETA: 1 day, 14:38:45.953779
+-> Epoch 55/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.026 | Durasi: 0:50:25.748153 | ETA: 1 day, 13:49:18.666884
+[OK] Checkpoint disimpan: ./Checkpoints/ckpt_55_.pt
+-> Epoch 56/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.024 | Durasi: 0:50:24.774217 | ETA: 1 day, 12:58:10.065543
+-> Epoch 57/100 | TrainLoss: 0.0018 | ValLoss: 0.0023 | GradNorm: 0.025 | Durasi: 0:50:26.136446 | ETA: 1 day, 12:08:43.867178
+-> Epoch 58/100 | TrainLoss: 0.0019 | ValLoss: 0.0023 | GradNorm: 0.023 | Durasi: 0:50:25.806909 | ETA: 1 day, 11:18:03.890192
+-> Epoch 59/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.023 | Durasi: 0:50:24.515866 | ETA: 1 day, 10:26:45.150488
+-> Epoch 60/100 | TrainLoss: 0.0018 | ValLoss: 0.0024 | GradNorm: 0.024 | Durasi: 0:50:25.479931 | ETA: 1 day, 9:36:59.197254
+[OK] Checkpoint disimpan: ./Checkpoints/ckpt_60_.pt
+-> Epoch 61/100 | TrainLoss: 0.0017 | ValLoss: 0.0022 | GradNorm: 0.021 | Durasi: 0:50:24.977677 | ETA: 1 day, 8:46:14.129416
+-> Epoch 62/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.022 | Durasi: 0:50:24.663712 | ETA: 1 day, 7:55:37.221039
+-> Epoch 63/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.023 | Durasi: 0:50:25.167321 | ETA: 1 day, 7:05:31.190893
+-> Epoch 64/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.023 | Durasi: 0:50:24.574126 | ETA: 1 day, 6:14:44.668545
+-> Epoch 65/100 | TrainLoss: 0.0017 | ValLoss: 0.0023 | GradNorm: 0.024 | Durasi: 0:50:24.879484 | ETA: 1 day, 5:24:30.781938
+[OK] Checkpoint disimpan: ./Checkpoints/ckpt_65_.pt
+-> Epoch 66/100 | TrainLoss: 0.0018 | ValLoss: 0.0023 | GradNorm: 0.023 | Durasi: 0:50:25.984018 | ETA: 1 day, 4:34:43.456623
+-> Epoch 67/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.025 | Durasi: 0:50:25.505461 | ETA: 1 day, 3:44:01.680228
+-> Epoch 68/100 | TrainLoss: 0.0018 | ValLoss: 0.0023 | GradNorm: 0.028 | Durasi: 0:50:26.269243 | ETA: 1 day, 2:54:00.615761
+-> Epoch 69/100 | TrainLoss: 0.0018 | ValLoss: 0.0023 | GradNorm: 0.027 | Durasi: 0:50:26.147961 | ETA: 1 day, 2:03:30.586781
+-> Epoch 70/100 | TrainLoss: 0.0018 | ValLoss: 0.0023 | GradNorm: 0.022 | Durasi: 0:50:24.472051 | ETA: 1 day, 1:12:14.161541
+[OK] Checkpoint disimpan: ./Checkpoints/ckpt_70_.pt
+-> Epoch 71/100 | TrainLoss: 0.0017 | ValLoss: 0.0022 | GradNorm: 0.024 | Durasi: 0:50:24.784390 | ETA: 1 day, 0:21:58.747302
+-> Epoch 72/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.026 | Durasi: 0:50:25.794066 | ETA: 23:32:02.233860
+-> Epoch 73/100 | TrainLoss: 0.0018 | ValLoss: 0.0023 | GradNorm: 0.024 | Durasi: 0:50:24.206441 | ETA: 22:40:53.573911
+-> Epoch 74/100 | TrainLoss: 0.0018 | ValLoss: 0.0023 | GradNorm: 0.026 | Durasi: 0:50:24.044281 | ETA: 21:50:25.151312
+-> Epoch 75/100 | TrainLoss: 0.0017 | ValLoss: 0.0023 | GradNorm: 0.025 | Durasi: 0:50:24.252876 | ETA: 21:00:06.321889
+[OK] Checkpoint disimpan: ./Checkpoints/ckpt_75_.pt
+-> Epoch 76/100 | TrainLoss: 0.0018 | ValLoss: 0.0023 | GradNorm: 0.026 | Durasi: 0:50:25.679276 | ETA: 20:10:16.302629
+-> Epoch 77/100 | TrainLoss: 0.0019 | ValLoss: 0.0022 | GradNorm: 0.021 | Durasi: 0:50:25.284544 | ETA: 19:19:41.544512
+-> Epoch 78/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.022 | Durasi: 0:50:24.898464 | ETA: 18:29:07.766202
+-> Epoch 79/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.022 | Durasi: 0:50:24.588121 | ETA: 17:38:36.350540
+-> Epoch 80/100 | TrainLoss: 0.0018 | ValLoss: 0.0023 | GradNorm: 0.023 | Durasi: 0:50:23.931990 | ETA: 16:47:58.639808
+[OK] Checkpoint disimpan: ./Checkpoints/ckpt_80_.pt
+-> Epoch 81/100 | TrainLoss: 0.0018 | ValLoss: 0.0023 | GradNorm: 0.025 | Durasi: 0:50:25.646320 | ETA: 15:58:07.280087
+-> Epoch 82/100 | TrainLoss: 0.0019 | ValLoss: 0.0024 | GradNorm: 0.033 | Durasi: 0:50:24.380298 | ETA: 15:07:18.845358
+-> Epoch 83/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.026 | Durasi: 0:50:24.094916 | ETA: 14:16:49.613570
+-> Epoch 84/100 | TrainLoss: 0.0018 | ValLoss: 0.0023 | GradNorm: 0.024 | Durasi: 0:50:24.615954 | ETA: 13:26:33.855259
+-> Epoch 85/100 | TrainLoss: 0.0018 | ValLoss: 0.0023 | GradNorm: 0.024 | Durasi: 0:50:25.426684 | ETA: 12:36:21.400255
+[OK] Checkpoint disimpan: ./Checkpoints/ckpt_85_.pt
+-> Epoch 86/100 | TrainLoss: 0.0018 | ValLoss: 0.0023 | GradNorm: 0.027 | Durasi: 0:50:24.149178 | ETA: 11:45:38.088492
+-> Epoch 87/100 | TrainLoss: 0.0018 | ValLoss: 0.0023 | GradNorm: 0.032 | Durasi: 0:50:23.951887 | ETA: 10:55:11.374536
+-> Epoch 88/100 | TrainLoss: 0.0018 | ValLoss: 0.0023 | GradNorm: 0.030 | Durasi: 0:50:24.420534 | ETA: 10:04:53.046410
+-> Epoch 89/100 | TrainLoss: 0.0017 | ValLoss: 0.0023 | GradNorm: 0.025 | Durasi: 0:50:24.484040 | ETA: 9:14:29.324435
+-> Epoch 90/100 | TrainLoss: 0.0019 | ValLoss: 0.0023 | GradNorm: 0.036 | Durasi: 0:50:24.269184 | ETA: 8:24:02.691841
+[OK] Checkpoint disimpan: ./Checkpoints/ckpt_90_.pt
+-> Epoch 91/100 | TrainLoss: 0.0019 | ValLoss: 0.0023 | GradNorm: 0.031 | Durasi: 0:52:03.541379 | ETA: 7:48:31.872411
+-> Epoch 92/100 | TrainLoss: 0.0019 | ValLoss: 0.0023 | GradNorm: 0.029 | Durasi: 0:51:28.650314 | ETA: 6:51:49.202515
+-> Epoch 93/100 | TrainLoss: 0.0017 | ValLoss: 0.0023 | GradNorm: 0.035 | Durasi: 0:50:26.917122 | ETA: 5:53:08.419852
+-> Epoch 94/100 | TrainLoss: 0.0018 | ValLoss: 0.0022 | GradNorm: 0.048 | Durasi: 1:02:29.581720 | ETA: 6:14:57.490321
+-> Epoch 95/100 | TrainLoss: 0.0019 | ValLoss: 0.0023 | GradNorm: 0.024 | Durasi: 1:46:40.519316 | ETA: 8:53:22.596580
+[OK] Checkpoint disimpan: ./Checkpoints/ckpt_95_.pt
+-> Epoch 96/100 | TrainLoss: 0.0017 | ValLoss: 0.0022 | GradNorm: 0.031 | Durasi: 1:46:39.563274 | ETA: 7:06:38.253097
+-> Epoch 97/100 | TrainLoss: 0.0019 | ValLoss: 0.0023 | GradNorm: 0.037 | Durasi: 1:46:36.372390 | ETA: 5:19:49.117171
+-> Epoch 98/100 | TrainLoss: 0.0018 | ValLoss: 0.0023 | GradNorm: 0.032 | Durasi: 1:46:40.318894 | ETA: 3:33:20.637788
+-> Epoch 99/100 | TrainLoss: 0.0019 | ValLoss: 0.0022 | GradNorm: 0.040 | Durasi: 1:46:42.708540 | ETA: 1:46:42.708540
+-> Epoch 100/100 | TrainLoss: 0.0019 | ValLoss: 0.0024 | GradNorm: 0.038 | Durasi: 1:46:47.500050 | ETA: 0:00:00
+[OK] Checkpoint disimpan: ./Checkpoints/ckpt_100_.pt
+
+===== MULAI TRAINING =====
+Epochs     : 200
+Batch size : 2
+LR         : 0.0001
+Seed       : 42
+Device     : cuda:0
+Dataset    : /data/3THDD/dataset/CBCT2CT/brain_DICOM/
+
+===== MULAI TRAINING =====
+Mulai epoch: 101/200 | resume_from='./Checkpoints/ckpt_100_.pt'
+Batch: 2 | LR: 0.0001 | Seed: 42 | Device: cuda:0
+-> Epoch 101/200 | TrainLoss: 0.0019 | ValLoss: 0.0023 | GradNorm: 0.027 | Durasi: 1:46:25.373780 | ETA: 7 days, 7:35:52.004221
+-> Epoch 102/200 | TrainLoss: 0.0019 | ValLoss: 0.0022 | GradNorm: 0.036 | Durasi: 1:46:26.309520 | ETA: 7 days, 5:50:58.332961
+-> Epoch 103/200 | TrainLoss: 0.0019 | ValLoss: 0.0023 | GradNorm: 0.035 | Durasi: 2:21:44.190564 | ETA: 9 days, 13:08:26.484700
+-> Epoch 104/200 | TrainLoss: 0.0019 | ValLoss: 0.0023 | GradNorm: 0.032 | Durasi: 2:32:20.491169 | ETA: 10 days, 3:44:47.152199
+-> Epoch 105/200 | TrainLoss: 0.0019 | ValLoss: 0.0023 | GradNorm: 0.021 | Durasi: 2:29:11.891456 | ETA: 9 days, 20:13:49.688355
+[OK] ./Checkpoints/ckpt_105_.pt
+-> Epoch 106/200 | TrainLoss: 0.0018 | ValLoss: 0.0023 | GradNorm: 0.032 | Durasi: 2:12:43.433250 | ETA: 8 days, 15:56:02.725473
+-> Epoch 107/200 | TrainLoss: 0.0019 | ValLoss: 0.0022 | GradNorm: 0.044 | Durasi: 1:31:26.873177 | ETA: 5 days, 21:44:39.205421
+-> Epoch 108/200 | TrainLoss: 0.0019 | ValLoss: 0.0026 | GradNorm: 0.040 | Durasi: 0:52:06.979906 | ETA: 3 days, 7:54:42.151360
+-> Epoch 109/200 | TrainLoss: 0.0020 | ValLoss: 0.0023 | GradNorm: 0.029 | Durasi: 1:46:39.721372 | ETA: 6 days, 17:46:14.644864
+-> Epoch 110/200 | TrainLoss: 0.0019 | ValLoss: 0.0023 | GradNorm: 0.029 | Durasi: 1:46:42.058352 | ETA: 6 days, 16:03:05.251722
+[OK] ./Checkpoints/ckpt_110_.pt
+-> Epoch 111/200 | TrainLoss: 0.0019 | ValLoss: 0.0023 | GradNorm: 0.026 | Durasi: 2:06:31.083222 | ETA: 7 days, 19:40:06.406793
+-> Epoch 112/200 | TrainLoss: 0.0019 | ValLoss: 0.0023 | GradNorm: 0.030 | Durasi: 2:16:46.805487 | ETA: 8 days, 8:36:38.882870
