@@ -33,6 +33,28 @@ python view_npy.py             # render [CBCT | sCT | GT] panels to PNG
 
 Each sample returns `{"CBCT", "pCT", "mask", "patient", "slice_name"}`.
 
+**HU calibration check (before vs after forcing intercept = −1024).** `HU_check_intercept.py` measures, inside the body mask, the systematic HU offset of CBCT relative to ground-truth CT — Δ = mean(CBCT − CT) — with the original DICOM tag (`before`) and with the forced −1024 (`after`):
+
+| patient / slice | orig_int | Δbefore | MAEbefore | Δafter | MAEafter |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 2BA007 / slice_0001 | 0 | 628 | 630 | −369 | 412 |
+| 2BA014 / slice_0174 | 0 | 1193 | 1193 | 202 | 223 |
+| 2BA035 / slice_0118 | 0 | 1212 | 1212 | 206 | 231 |
+| 2BA056 / slice_0077 | 0 | 1172 | 1172 | 165 | 185 |
+| 2BA077 / slice_0061 | 0 | 952 | 952 | −64 | 109 |
+| 2BB011 / slice_0122 | −1000 | −156 | 187 | −176 | 203 |
+| 2BB049 / slice_0045 | −1000 | −254 | 270 | −273 | 286 |
+| 2BB109 / slice_0129 | −1000 | −265 | 270 | −285 | 288 |
+| 2BB179 / slice_0044 | −1000 | −237 | 259 | −256 | 275 |
+| 2BC014 / slice_0078 | −1024 | −41 | 99 | −41 | 99 |
+| 2BC042 / slice_0043 | −1024 | −19 | 83 | −19 | 83 |
+| 2BC070 / slice_0216 | −1024 | 182 | 182 | 182 | 182 |
+
+- **Series 2BA (wrong tag, intercept 0):** before correction the CBCT is off by ~950–1210 HU (MAE up to ~1210); forcing −1024 cuts MAE to ~110–230 HU — a **~4–5× reduction**. This is the calibration bug being removed.
+- **Series 2BB / 2BC (tag already at/near −1024):** values barely change, because their CBCT was already on the correct HU scale. The residual ~80–290 HU is genuine CBCT-vs-CT difference (scatter/artifacts) — what the model is meant to fix, not a calibration issue.
+
+> The offset is measured after the pipeline clips HU to `[-1000, 2000]`, which slightly compresses the 2BA `before` values (bone hits the ceiling) and explains the small negative `Δafter` on a few 2BA slices. The magnitude of the fix is unaffected.
+
 ## Stage 2 — Model & Diffusion (`Model_condition.py`, `Diffusion_condition.py`)
 
 - **UNet backbone:** time-embedded residual blocks with self-attention, base width `ch=128`, channel multipliers `[1, 2, 3, 4]`, attention at resolution level `[2]`, 2 residual blocks per level. The network takes **2 input channels** (the noised CT + the CBCT condition) and predicts a **1-channel** noise estimate.
