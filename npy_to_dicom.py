@@ -1,26 +1,27 @@
 """
 npy_to_dicom.py
 -----------------------------------------------------------------------------
-Konversi sCT (.npy, HU float32) -> DICOM series per pasien.
+Convert sCT (.npy, HU float32) -> a DICOM series per patient.
 
-Kalibrasi HU (cegah bug intercept):
+HU calibration (prevents the intercept bug):
     RescaleIntercept=-1024, RescaleSlope=1, RescaleType='HU'
-    stored(int16) = round(HU + 1024)  ->  viewer baca HU identik dgn .npy
+    stored(int16) = round(HU + 1024)  ->  viewer reads HU identical to the .npy
 
-Geometri / bentuk (oval vs bulat):
-    Data dilatih di 256x256, sementara CBCT/CT asli landscape (mis 289x245,
-    FOV W/H ~1.18). Resize-ke-persegi membuat sCT tampak lebih bulat.
-    GRID_MODE mengatur cara mengembalikan bentuk yang benar:
+Geometry / shape (oval vs round):
+    The data was trained at 256x256, while the original CBCT/CT is landscape
+    (e.g. 289x245, FOV W/H ~1.18). Resizing to square makes the sCT look rounder.
+    GRID_MODE controls how the correct shape is restored:
 
-      "match_ct"     : RESAMPLE sCT 256x256 -> grid asli CT pasien (mis 245x289),
-                       PixelSpacing ikut CT. sCT jadi SEGRID dgn CT/GT (bisa
-                       overlay). Catatan: resize sedikit menghaluskan HU tepi.
-      "display_only" : TIDAK resample. Tetap 256x256, tapi PixelSpacing dibuat
-                       anisotropik supaya FOV fisik = native -> bentuk oval pulih
-                       di viewer. HU bit-exact (tidak disentuh).
-      "square"       : perilaku lama, 256x256 + spacing isotropik (PIXEL_SPACING).
+      "match_ct"     : RESAMPLE the 256x256 sCT -> the patient's original CT grid
+                       (e.g. 245x289), PixelSpacing follows the CT. The sCT is then
+                       ON THE SAME GRID as CT/GT (can overlay). Note: resizing
+                       slightly smooths the edge HU.
+      "display_only" : Does NOT resample. Stays 256x256, but PixelSpacing is made
+                       anisotropic so the physical FOV = native -> the oval shape
+                       is restored in the viewer. HU is bit-exact (untouched).
+      "square"       : old behavior, 256x256 + isotropic spacing (PIXEL_SPACING).
 
-Grid asli dibaca otomatis dari REF_DICOM_ROOT/<patient>/REF_SUB/.
+The original grid is read automatically from REF_DICOM_ROOT/<patient>/REF_SUB/.
 -----------------------------------------------------------------------------
 """
 
@@ -41,29 +42,29 @@ CT_IMAGE_STORAGE = "1.2.840.10008.5.1.4.1.1.2"
 NPY_ROOT = "./test/test/npy"
 OUT_ROOT = "./test/test/dicom_sCT_post_process"
 
-# index sCT kalau file .npy berbentuk (3,H,W)=[CBCT,Fake,GT]; diabaikan jika (H,W)
+# sCT index if the .npy has shape (3,H,W)=[CBCT,Fake,GT]; ignored if (H,W)
 SCT_INDEX = 1
 
-# --- kalibrasi HU (JANGAN diubah tanpa alasan) ---
+# --- HU calibration (do NOT change without reason) ---
 RESCALE_INTERCEPT = -1024
 RESCALE_SLOPE = 1
 
-# --- geometri / bentuk ---
+# --- geometry / shape ---
 GRID_MODE = "match_ct"      # "match_ct" | "display_only" | "square"
 REF_DICOM_ROOT = "/data/3THDD/dataset/CBCT2CT/brain_DICOM"
-REF_SUB = "ct"              # baca grid asli dari subfolder ini (ct atau cbct, sama)
+REF_SUB = "ct"              # read the original grid from this subfolder (ct or cbct, same)
 
-# dipakai HANYA kalau GRID_MODE="square" atau geometri referensi tak ditemukan
+# used ONLY if GRID_MODE="square" or the reference geometry is not found
 PIXEL_SPACING = [1.0, 1.0]  # [row, col] mm
 SLICE_THICKNESS = 1.0       # mm
-SLICE_SPACING = 1.0         # mm, increment z antar slice
+SLICE_SPACING = 1.0         # mm, z increment between slices
 
-# --- window tampilan (HANYA preset; HU tidak berubah) ---
-REF_CT_DICOM = None         # path 1 file CT utk salin window; None -> preset bawah
+# --- display window (preset ONLY; HU does not change) ---
+REF_CT_DICOM = None         # path to 1 CT file to copy the window from; None -> preset below
 WINDOW_CENTER = [40, 500]   # [brain, bone]
 WINDOW_WIDTH = [80, 2000]   # [brain, bone]
 
-HU_CLIP = (-1024, 3071)     # safety net agar muat int16; None = tidak clip
+HU_CLIP = (-1024, 3071)     # safety net to fit int16; None = no clipping
 # ===========================================================================
 
 
@@ -93,9 +94,9 @@ def load_sct_hu(path):
         elif arr.shape[0] > SCT_INDEX:
             arr = arr[SCT_INDEX]
         else:
-            raise ValueError(f"Bentuk tak terduga {arr.shape} di {path}")
+            raise ValueError(f"Unexpected shape {arr.shape} in {path}")
     if arr.ndim != 2:
-        raise ValueError(f"Slice bukan 2D: {arr.shape} di {path}")
+        raise ValueError(f"Slice is not 2D: {arr.shape} in {path}")
     return arr.astype(np.float32)
 
 
@@ -114,7 +115,7 @@ def resolve_window():
 
 
 def resolve_patient_geometry(patient):
-    """Baca grid asli (rows, cols, row_sp, col_sp) dari DICOM CT pasien. None jika gagal."""
+    """Read the original grid (rows, cols, row_sp, col_sp) from the patient's CT DICOM. None on failure."""
     ref_dir = os.path.join(REF_DICOM_ROOT, patient, REF_SUB)
     files = sorted(glob.glob(os.path.join(ref_dir, "*.dcm")))
     if not files:
@@ -198,7 +199,7 @@ def make_dicom_slice(stored2d, patient_id, study_uid, series_uid, frame_uid,
 
 
 def plan_geometry(patient, src_shape):
-    """Tentukan (target_shape, pixel_spacing, do_resize) sesuai GRID_MODE."""
+    """Decide (target_shape, pixel_spacing, do_resize) according to GRID_MODE."""
     src_rows, src_cols = src_shape
     geo = resolve_patient_geometry(patient) if GRID_MODE in ("match_ct", "display_only") else None
 
@@ -210,7 +211,7 @@ def plan_geometry(patient, src_shape):
         phys_h, phys_w = nr * rsp, nc * csp
         return (src_rows, src_cols), [phys_h / src_rows, phys_w / src_cols], False, True
     # fallback / square
-    fell_back = (GRID_MODE in ("match_ct", "display_only"))  # geo gagal
+    fell_back = (GRID_MODE in ("match_ct", "display_only"))  # geo failed
     return (src_rows, src_cols), list(PIXEL_SPACING), False, (not fell_back)
 
 
@@ -256,11 +257,11 @@ def main():
             if not geo_ok:
                 warn.append(p)
 
-    print(f"Selesai. GRID_MODE={GRID_MODE}. {len(summary)} pasien, {total} slice -> {OUT_ROOT}")
+    print(f"Done. GRID_MODE={GRID_MODE}. {len(summary)} patients, {total} slices -> {OUT_ROOT}")
     for p, n in summary:
-        print(f"  {p}: {n} slice")
+        print(f"  {p}: {n} slices")
     if warn:
-        print("\nPERINGATAN: geometri referensi tak ditemukan, pakai PIXEL_SPACING default utk:")
+        print("\nWARNING: reference geometry not found, using the default PIXEL_SPACING for:")
         for p in warn:
             print(f"  {p}")
 

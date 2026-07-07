@@ -39,7 +39,7 @@ def nifti_to_dicom(nifti_path, output_dir, modality="CT", is_mask=False, series_
         file_meta.MediaStorageSOPClassUID    = "1.2.840.10008.5.1.4.1.1.2"
         file_meta.MediaStorageSOPInstanceUID = generate_uid()
         file_meta.TransferSyntaxUID          = ExplicitVRLittleEndian
-        file_meta.ImplementationClassUID     = generate_uid()  # ← tambahan
+        file_meta.ImplementationClassUID     = generate_uid()  # ← added
 
         ds = FileDataset(None, {}, file_meta=file_meta, preamble=b"\0" * 128)
 
@@ -53,8 +53,8 @@ def nifti_to_dicom(nifti_path, output_dir, modality="CT", is_mask=False, series_
         ds.SeriesInstanceUID = series_instance_uid
         ds.SeriesNumber      = 1
         ds.Modality          = modality
-        ds.SeriesDescription = series_description        # "cbct", "ct", atau "mask"
-        ds.StudyDescription  = "Brain CBCT2CT"   # deskripsi bebas
+        ds.SeriesDescription = series_description        # "cbct", "ct", or "mask"
+        ds.StudyDescription  = "Brain CBCT2CT"   # free-form description
         ds.PatientPosition   = "HFS"
 
         ds.SOPClassUID    = file_meta.MediaStorageSOPClassUID
@@ -79,9 +79,9 @@ def nifti_to_dicom(nifti_path, output_dir, modality="CT", is_mask=False, series_
         ds.RescaleSlope              = 1
         ds.RescaleIntercept          = rescale_intercept
 
-        # ← cara yang benar untuk set pixel data di pydicom
+        # ← the correct way to set pixel data in pydicom
         ds.PixelData = slice_data.tobytes()
-        ds['PixelData'].VR = 'OB'   # ← fix utama
+        ds['PixelData'].VR = 'OB'   # ← main fix
 
         out_path = os.path.join(output_dir, f"slice_{i+1:04d}.dcm")
         pydicom.dcmwrite(out_path, ds, write_like_original=False)

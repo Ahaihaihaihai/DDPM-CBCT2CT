@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
 """
-metric_from_npy.py — Metrik sCT vs GT dari .npy hasil Test_condition.py.
-PER-SLICE + ringkasan mean±std (per pasien & global). FULL & ROI berdampingan.
+metric_from_npy.py — sCT vs GT metrics from the .npy output of Test_condition.py.
+PER-SLICE + mean±std summary (per patient & global). FULL & ROI side by side.
 
-Layout input (sesuai Test_condition.py):
-    <NPY_ROOT>/<pasien>/sCT/<slice>.npy        -> (3,256,256) HU = [CBCT, Fake, GT]
-    <NPY_ROOT>/<pasien>/mask/<slice>_mask.npy  -> (256,256)   0/1
+Input layout (from Test_condition.py):
+    <NPY_ROOT>/<patient>/sCT/<slice>.npy        -> (3,256,256) HU = [CBCT, Fake, GT]
+    <NPY_ROOT>/<patient>/mask/<slice>_mask.npy  -> (256,256)   0/1
 Channel: 0=CBCT, 1=Fake(sCT), 2=GT(CT).
 
 Output:
-    - CSV PER PASIEN: <NPY_ROOT>/<pasien>/metrics_per_slice.csv  (1 baris per slice + mean/std)
-    - CSV ringkasan : <NPY_ROOT>/metrics_summary.csv             (1 baris per pasien + global)
-    - Cetak per-slice ke layar (PRINT_PER_SLICE) + ringkasan.
+    - PER-PATIENT CSV: <NPY_ROOT>/<patient>/metrics_per_slice.csv  (1 row per slice + mean/std)
+    - Summary CSV    : <NPY_ROOT>/metrics_summary.csv              (1 row per patient + global)
+    - Print per-slice to the screen (PRINT_PER_SLICE) + summary.
 
-Pemakaian:
+Usage:
     python metric_from_npy.py
     python metric_from_npy.py <NPY_ROOT>
 """
@@ -26,9 +26,9 @@ import numpy as np
 from skimage.metrics import structural_similarity as ssim_fn
 
 # ============================ CONFIG ============================
-NPY_ROOT        = "./test/test/npy"     # <-- root output Test_condition.py
-SUMMARY_CSV     = "metrics_summary.csv"  # ditaruh di dalam NPY_ROOT
-PRINT_PER_SLICE = True                   # cetak metrik tiap slice ke layar
+NPY_ROOT        = "./test/test/npy"     # <-- Test_condition.py output root
+SUMMARY_CSV     = "metrics_summary.csv"  # placed inside NPY_ROOT
+PRINT_PER_SLICE = True                   # print each slice's metrics to the screen
 
 BG_HU      = -1000.0
 DATA_RANGE = 4071.0      # PSNR & SSIM (Liang 2019)
@@ -49,18 +49,18 @@ def safe_ssim(a, b, data_range):
 
 
 def slice_metrics(cbct, fake, gt, mask):
-    """Metrik untuk SATU slice. Kembalikan dict (full + roi + baseline cbct)."""
+    """Metrics for ONE slice. Returns a dict (full + roi + cbct baseline)."""
     out = {}
     ef = fake - gt
 
-    # ---- FULL (semua pixel, definisi paper eq.23/24) ----
+    # ---- FULL (all pixels, paper definition eq.23/24) ----
     out["full_mae"]  = float(np.abs(ef).mean())
     r = float(np.sqrt((ef.astype(np.float64) ** 2).mean()))
     out["full_rmse"] = r
     out["full_psnr"] = 20.0 * math.log10(DATA_RANGE / r) if r > EPS else float("inf")
     out["full_ssim"] = safe_ssim(gt, fake, DATA_RANGE)
 
-    # ---- ROI (dalam mask) ----
+    # ---- ROI (inside the mask) ----
     if mask.any():
         efm = ef[mask]
         out["roi_mae"]  = float(np.abs(efm).mean())
@@ -102,11 +102,11 @@ def main():
         if os.path.isdir(d) and os.path.isdir(os.path.join(d, "sCT"))
     ])
     if not patients:
-        print(f"Tidak ada pasien (folder dgn subfolder sCT/) di: {npy_root}")
+        print(f"No patients (folders with an sCT/ subfolder) in: {npy_root}")
         sys.exit(1)
 
-    all_rows = []           # semua slice (untuk global)
-    summary_rows = []       # ringkasan per pasien
+    all_rows = []           # all slices (for the global summary)
+    summary_rows = []       # per-patient summary
 
     for pdir in patients:
         patient = os.path.basename(pdir)
@@ -116,7 +116,7 @@ def main():
 
         rows = []
         if PRINT_PER_SLICE:
-            print(f"\n=== {patient} ({len(files)} slice) ===")
+            print(f"\n=== {patient} ({len(files)} slices) ===")
             print(f"  {'slice':<16}{'ROI MAE':>9}{'PSNR':>8}{'SSIM':>8}{'CBCT':>9}")
 
         for f in files:
@@ -136,7 +136,7 @@ def main():
                 print(f"  {slice_name:<16}{m['roi_mae']:>9.2f}{m['roi_psnr']:>8.2f}"
                       f"{m['roi_ssim']:>8.3f}{m['cbct_roi_mae']:>9.2f}")
 
-        # ---- CSV per pasien (di folder pasien) ----
+        # ---- per-patient CSV (in the patient folder) ----
         pcsv = os.path.join(pdir, "metrics_per_slice.csv")
         with open(pcsv, "w", newline="") as fh:
             w = csv.writer(fh)
@@ -146,7 +146,7 @@ def main():
                     f"{m[k]:.4f}" if isinstance(m[k], float) else m[k]
                     for k in PER_SLICE_COLS[1:]
                 ])
-            # baris mean & std
+            # mean & std rows
             for label in ("MEAN", "STD"):
                 line = [label]
                 for k in PER_SLICE_COLS[1:]:
@@ -157,7 +157,7 @@ def main():
                     line.append(f"{mu:.4f}" if label == "MEAN" else f"{sd:.4f}")
                 w.writerow(line)
 
-        # ---- ringkasan pasien ----
+        # ---- patient summary ----
         pr = {k: stat([r[k] for r in rows]) for k in
               ["roi_mae", "roi_psnr", "roi_ssim", "full_mae", "full_psnr", "cbct_roi_mae"]}
         summary_rows.append((patient, len(rows), pr))
@@ -166,7 +166,7 @@ def main():
                   f"PSNR {pr['roi_psnr'][0]:.2f} | SSIM {pr['roi_ssim'][0]:.3f} "
                   f"(CBCT MAE {pr['cbct_roi_mae'][0]:.2f}) | CSV: {pcsv}")
 
-    # ---- CSV ringkasan (per pasien + global) di root ----
+    # ---- summary CSV (per patient + global) at the root ----
     scsv = os.path.join(npy_root, SUMMARY_CSV)
     with open(scsv, "w", newline="") as fh:
         w = csv.writer(fh)
@@ -178,12 +178,12 @@ def main():
                         f"{pr['roi_ssim'][0]:.4f}", f"{pr['full_mae'][0]:.4f}",
                         f"{pr['full_psnr'][0]:.4f}", f"{pr['cbct_roi_mae'][0]:.4f}"])
 
-    # ---- ringkasan GLOBAL (mean±std antar semua slice) ----
+    # ---- GLOBAL summary (mean±std across all slices) ----
     def g(k): return stat([r[k] for r in all_rows])
     print("\n" + "=" * 60)
-    print(f"RINGKASAN GLOBAL  ({len(all_rows)} slice, {len(summary_rows)} pasien)")
+    print(f"GLOBAL SUMMARY  ({len(all_rows)} slices, {len(summary_rows)} patients)")
     print("=" * 60)
-    print(f"{'metrik':<16}{'ROI (mask)':>18}{'FULL IMAGE':>18}")
+    print(f"{'metric':<16}{'ROI (mask)':>18}{'FULL IMAGE':>18}")
     print("-" * 52)
     print(f"{'MAE (HU)':<16}{g('roi_mae')[0]:>11.2f}±{g('roi_mae')[1]:<5.2f}"
           f"{g('full_mae')[0]:>11.2f}±{g('full_mae')[1]:<5.2f}")
@@ -195,8 +195,8 @@ def main():
           f"{g('full_ssim')[0]:>11.3f}±{g('full_ssim')[1]:<5.3f}")
     print("-" * 52)
     print(f"CBCT baseline ROI MAE: {g('cbct_roi_mae')[0]:.2f}±{g('cbct_roi_mae')[1]:.2f} HU")
-    print(f"Benchmark paper (FULL): MAE ~26 HU | PSNR ~30.5 dB")
-    print(f"\nCSV per pasien: <pasien>/metrics_per_slice.csv | ringkasan: {scsv}")
+    print(f"Paper benchmark (FULL): MAE ~26 HU | PSNR ~30.5 dB")
+    print(f"\nPer-patient CSV: <patient>/metrics_per_slice.csv | summary: {scsv}")
 
 
 if __name__ == "__main__":
