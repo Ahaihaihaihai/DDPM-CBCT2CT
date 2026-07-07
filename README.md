@@ -62,6 +62,14 @@ Implements the paper's training procedure with production conveniences on top.
 
 > The model typically converges around epoch 20–30; the default `n_epochs=200` is intentionally generous headroom, not a required target.
 
+**Loss curve (training vs validation):**
+
+![Training vs validation loss](Checkpoint/loss_curve.png)
+
+
+
+Both the training and validation loss drop steeply in the first few epochs and then flatten out and track each other closely — a sign that the model has converged and is not overfitting.
+
 ## Stage 4 — Sampling & Evaluation (`Test_condition.py`, `metric_peng.py`)
 
 - **Full-chain sampling (paper Algorithm 2.2):** start from pure noise `x_T ~ N(0, I)`, denoise all T steps with the CBCT concatenated as a constant condition, then re-mask the background to `-1`. Per-slice seeding makes results reproducible. Each slice is saved as a `(3, 256, 256)` HU array `[CBCT, sCT, GT]` under `./test/<run>/npy/<patient>/sCT/`, with `RESUME=True` skipping already-sampled slices.
@@ -69,13 +77,13 @@ Implements the paper's training procedure with production conveniences on top.
 
 ### Results (test set, full image)
 
-Computed over the held-out test patients (`metrics_full_vs_roi.csv`, full-image metrics):
+Computed over the held-out test patients (`metrics_peng.csv`):
 
-| Source | MAE (HU) | RMSE (HU) | PSNR (dB) | SSIM |
-| --- | --- | --- | --- | --- |
-| CBCT (input baseline) | 100.71 ± 46.35 | — | — | — |
-| **sCT (this model)** | **31.14 ± 4.94** | **98.49 ± 14.56** | **26.22 ± 1.25** | **0.918 ± 0.018** |
-| Peng et al. benchmark (brain, full) | 25.99 | — | 30.49 | — |
+| Comparison items | MAE | PSNR | NCC |
+| --- | --- | --- | --- |
+| Original Paper | 25.99±11.84 | 30.49±3.73 | 0.99±0.01 |
+| Epoch_100_Full | 31.13861304 | 24.39186087 | 0.964869565 |
+| Epoch_100_roi | 76.97120435 | 21.02089565 | 0.935452174 |
 
 The sCT reduces MAE against ground-truth CT by roughly **3×** versus the raw CBCT input, confirming the HU correction and structural translation are working. (PSNR here uses the paper's max-pixel definition on data clipped to `[-1000, 2000]` HU, so it is a slightly conservative apples-to-oranges comparison with the paper's number.)
 
@@ -105,8 +113,8 @@ source ~/.bashrc
 ### 2. Create the environment
 
 ```bash
-conda create -n img2img python=3.11
-conda activate img2img
+conda create -n proj python=3.11
+conda activate proj
 pip install torch torchvision pydicom scikit-image matplotlib tqdm numpy
 ```
 
