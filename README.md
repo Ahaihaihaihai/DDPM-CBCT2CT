@@ -87,6 +87,37 @@ Computed over the held-out test patients (`metrics_peng.csv`):
 
 The sCT reduces MAE against ground-truth CT by roughly **3×** versus the raw CBCT input, confirming the HU correction and structural translation are working. (PSNR here uses the paper's max-pixel definition on data clipped to `[-1000, 2000]` HU, so it is a slightly conservative apples-to-oranges comparison with the paper's number.)
 
+<table>
+  <thead>
+    <tr>
+      <th align="center">Patient</th>
+      <th align="center">CBCT (input)</th>
+      <th align="center">sCT (this model)</th>
+      <th align="center">CT (ground truth)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center"><b>2BA063</b></td>
+      <td><img src="Result/2BA063/CBCT.png" width="200"></td>
+      <td><img src="Result/2BA063/sCT.png" width="200"></td>
+      <td><img src="Result/2BA063/CT.png" width="200"></td>
+    </tr>
+    <tr>
+      <td align="center"><b>2BB109</b></td>
+      <td><img src="Result/2BB109/CBCT.png" width="200"></td>
+      <td><img src="Result/2BB109/sCT.png" width="200"></td>
+      <td><img src="Result/2BB109/CT.png" width="200"></td>
+    </tr>
+    <tr>
+      <td align="center"><b>2BC070</b></td>
+      <td><img src="Result/2BC070/CBCT.png" width="200"></td>
+      <td><img src="Result/2BC070/sCT.png" width="200"></td>
+      <td><img src="Result/2BC070/CT.png" width="200"></td>
+    </tr>
+  </tbody>
+</table>
+
 # Engineering & Evaluation
 
 Beyond the model itself, the project includes tooling for training stability, evaluation accuracy, and clinical export:
