@@ -7,7 +7,7 @@ import torch
 from datasets import BrainDataset
 
 # ===================== CONFIG =====================
-dataset_name = "/data/3THDD/dataset/CBCT2CT/brain_DICOM/"
+dataset_name = "../dataset/"
 N_SLICES = 12
 HU_MIN, HU_MAX = -1000, 2000
 # ==================================================

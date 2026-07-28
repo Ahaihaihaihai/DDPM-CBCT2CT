@@ -51,7 +51,7 @@ RESCALE_SLOPE = 1
 
 # --- geometry / shape ---
 GRID_MODE = "match_ct"      # "match_ct" | "display_only" | "square"
-REF_DICOM_ROOT = "/data/3THDD/dataset/CBCT2CT/brain_DICOM"
+REF_DICOM_ROOT = "../dataset"
 REF_SUB = "ct"              # read the original grid from this subfolder (ct or cbct, same)
 
 # used ONLY if GRID_MODE="square" or the reference geometry is not found

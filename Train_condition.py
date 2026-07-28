@@ -25,7 +25,7 @@ from datasets import BrainDataset
 
 
 # ===================== CONFIG =====================
-dataset_name = "/data/3THDD/dataset/CBCT2CT/brain_DICOM/"
+dataset_name = "../dataset/"
 batch_size = 2
 T = 1000
 ch = 128

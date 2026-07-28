@@ -8,7 +8,7 @@ import numpy as np
 import pydicom
 
 # ===================== CONFIG =====================
-root = "/data/3THDD/dataset/CBCT2CT/brain_DICOM/"
+root = "../dataset/"
 PATIENTS = ["2BA007", "2BB011", "2BC014"]   # one representative per series (adjust if needed)
 SUBS = ["cbct", "ct"]
 # ==================================================
