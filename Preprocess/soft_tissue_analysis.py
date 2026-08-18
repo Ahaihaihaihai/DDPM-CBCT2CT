@@ -104,7 +104,7 @@ def draw_panel_values(ax, label, valdict):
     lo = min(valdict[s].min() for s in order); hi = max(valdict[s].max() for s in order)
     bins = np.arange(lo, hi + HIST_BIN_WIDTH, HIST_BIN_WIDTH)
     for s in order:
-        ax.hist(valdict[s], bins=bins, alpha=0.45, density=True,
+        ax.hist(valdict[s], bins=bins, alpha=0.45, density=False,
                 label=STREAM_LABEL[s], color=STREAM_COLOR[s])
     x0, x1 = _zoom([stats(valdict[s]) for s in order])
     ax.set_xlim(x0, x1)
